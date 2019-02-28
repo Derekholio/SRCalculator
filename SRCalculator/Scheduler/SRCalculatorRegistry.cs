@@ -1,9 +1,5 @@
 ﻿using FluentScheduler;
 using SRCalculator.Scheduler.Jobs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SRCalculator.Scheduler
 {

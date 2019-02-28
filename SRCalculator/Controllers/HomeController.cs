@@ -15,9 +15,9 @@ namespace SRCalculator.Controllers
             using (SRCalculatorContext db = new SRCalculatorContext())
             {
                 List<Player> players = db.Players.ToList();
-                var targetSR = 2350;
-                var playerCount = players.Count();
-                var averageSR = Math.Round(db.Players.Select(x => x.SR).Average(), 0);
+                int targetSR = 2350;
+                int playerCount = players.Count();
+                double averageSR = Math.Round(db.Players.Select(x => x.SR).Average(), 0);
 
                 ViewBag.AverageSR = averageSR;
                 ViewBag.TargetSR = targetSR;

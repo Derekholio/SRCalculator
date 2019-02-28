@@ -6,7 +6,6 @@ using SRCalculator.SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SRCalculator.Scheduler.Jobs
 {
@@ -14,20 +13,20 @@ namespace SRCalculator.Scheduler.Jobs
     {
         public void Execute()
         {
-            var serviceDomain = "http://overwatchy.com";
-            var serviceURL = "/profile/pc/us/{0}";
+            string serviceDomain = "http://overwatchy.com";
+            string serviceURL = "/profile/pc/us/{0}";
 
-            using (var db = new SRCalculatorContext())
+            using (SRCalculatorContext db = new SRCalculatorContext())
             {
-                var client = GetClient(serviceDomain);
+                RestClient client = GetClient(serviceDomain);
 
                 List<Player> players = db.Players.ToList();
-                foreach(var player in players)
+                foreach(Player player in players)
                 {
-                    var friendlyUsername = player.Username.Replace("#", "-");
-                    var serviceCall = string.Format(serviceURL, friendlyUsername);
-                    var request = GetRequest(serviceCall, Method.GET);
-                    var response = client.Execute(request);
+                    string friendlyUsername = player.Username.Replace("#", "-");
+                    string serviceCall = string.Format(serviceURL, friendlyUsername);
+                    RestRequest request = GetRequest(serviceCall, Method.GET);
+                    IRestResponse response = client.Execute(request);
                     if (response.IsSuccessful)
                     {
                         try
