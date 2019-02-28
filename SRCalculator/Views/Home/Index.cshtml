@@ -1,0 +1,60 @@
+﻿@model IEnumerable<SRCalculator.SQLite.Player>
+
+@{
+    ViewData["Title"] = "SR Calculator";
+}
+
+<h2>In Bob We Trust</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div id="team-average">Team Average: @ViewBag.AverageSR</div>
+<div id="target-sr">Target SR: @ViewBag.TargetSR</div>
+<div id="sr-new-player">Max SR of new player: @ViewBag.MaxNewSR</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrivateProfile)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @{ 
+                    var rankImage = string.IsNullOrWhiteSpace(item.RankImage) ? "/images/sad_face.jpg" : item.RankImage;
+                }
+                <img src="@rankImage" class="rank-marker" /> @Html.DisplayFor(modelItem => item.SR)
+            </td>
+            <td>
+                @if (item.PrivateProfile)
+                {
+                    <img src="~/images/error_warning_alert_attention-512.png" alt="Private Profile" class="private-profile-marker" />
+                }
+                else
+                {
+                    <!--<img src="~/images/green_check.png" alt="No Private Profile" class="private-profile-marker"/>-->
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
